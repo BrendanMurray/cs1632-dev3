@@ -1,0 +1,34 @@
+cs1632-dev3 user stories
+
+As a user, 
+When I click a specific site
+I want to see only articles from that site
+So I see stories from only a specific publisher
+
+As a user,
+When I click the comments
+I want to see the comments for a specific thread
+So that I can learn how other’s view the story
+
+As a user
+I want to be able to log in with a username and password
+So I can interact with the community
+
+As a user
+I want to click on the navigation bar 
+So that I can be redirected to different pages
+
+As a user
+When I click a story
+I want to be redirected to the corresponding site for the story
+So that I can read it   
+
+As a user
+When I click a user’s name
+I want to be redirected to their respective profile page
+So that I can learn about the community
+
+As a user
+When I search for something with the search bar
+I want to see a list of related new stories
+
