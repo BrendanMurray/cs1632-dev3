@@ -119,4 +119,19 @@ public class HackerNewsTest {
 		String newPageTitle = driver.getTitle();
 		assertTrue(newPageTitle.contains("jobs"));
 	}
+
+	// Given that I am on the main page
+	// When I click on the "ask" link
+	// Then I should be redirected to the "Ask" page
+	@Test
+	public void testSeeLogin() {
+		
+		//Check that the page contains the "login" element
+		
+		try {
+			driver.findElement(By.linkText("login"));
+		} catch (NoSuchElementException nseex) {
+			fail();
+		}
+	}
 }
