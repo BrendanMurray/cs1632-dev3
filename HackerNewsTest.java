@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -10,11 +11,21 @@ import java.util.regex.Pattern;
 public class HackerNewsTest {
 
 	static WebDriver driver = new HtmlUnitDriver();
-	
+	static String baseUrl = "https://news.ycombinator.com";
 	// Start at the home page for hackernews for each test
+	@BeforeClass
+	public static void beforeAllSetUp() throws Exception{
+		driver.get(baseUrl);
+		driver.findElement(By.linkText("login")).click();
+	    driver.findElement(By.name("acct")).clear();
+	    driver.findElement(By.name("acct")).sendKeys("cs1632Test");
+	    driver.findElement(By.name("pw")).clear();
+	    driver.findElement(By.name("pw")).sendKeys("pokemon123");
+	    driver.findElement(By.cssSelector("input[type=\"submit\"]")).click();
+	}
 	@Before
 	public void setUp() throws Exception {
-		driver.get("https://news.ycombinator.com");
+		driver.get(baseUrl);
 	}
 
 	// Given that I am on the main page
