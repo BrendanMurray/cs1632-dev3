@@ -227,4 +227,48 @@ public class HackerNewsTest {
 			fail();
 		}
 	}
+
+	//Test searching functionality
+	/*
+	@Test
+	public void testSearchExistingStory()
+	{
+		fail();
+	}
+	@Test
+	public void testSearchNoResults()
+	{
+		fail();
+	}
+	public void testSearchRedirect()
+	{
+		fail();
+	}
+	public void testSearchTime()
+	{
+		fail();
+	}
+	public void testSearchNumResults()
+	{
+		fail();
+	}
+	
+	//Test Profile Page
+	public void testProfileRedirect()
+	{
+		fail();
+	}
+	public void testProfileCommentsRedirect()
+	{
+		fail();
+	}
+	public void testProfileSubmissionRedirect()
+	{
+		fail();
+	}
+	public void testProfileUserName()
+	{
+		fail();
+	}
+	*/
 }
