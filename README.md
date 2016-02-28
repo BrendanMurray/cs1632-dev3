@@ -1,3 +1,5 @@
+Google Doc Link for writeup: <a href="https://docs.google.com/document/d/1Ic50u8XoJpDFNcJjTj2ijWwwko67R-GiChFupwWhbrs/edit?usp=sharing">Available here</a>
+
 # CS 1632 - Software Quality Assurance
 Spring Semester 2015
 

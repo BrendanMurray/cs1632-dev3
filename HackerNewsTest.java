@@ -79,8 +79,8 @@ public class HackerNewsTest {
 	}
 	
 	// Given that I am on the main page
-	// When I click on the "new" link
-	// Then I should be redirected to the "newest" page
+	// When I click on the "show" link
+	// Then I should be redirected to the "Show" page
 	@Test
 	public void testSeeShow() {
 		
@@ -107,8 +107,8 @@ public class HackerNewsTest {
 	}
 
 	// Given that I am on the main page
-	// When I click on the "ask" link
-	// Then I should be redirected to the "Ask" page
+	// When I click on the "jobs" link
+	// Then I should be redirected to the "jobs" page
 	@Test
 	public void testSeeJobs() {
 		
@@ -121,8 +121,8 @@ public class HackerNewsTest {
 	}
 
 	// Given that I am on the main page
-	// When I click on the "ask" link
-	// Then I should be redirected to the "Ask" page
+	// When I click on the "login" link
+	// Then I should be redirected to the "login" page
 	@Test
 	public void testSeeLogin() {
 		
