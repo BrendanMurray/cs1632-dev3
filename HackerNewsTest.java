@@ -169,7 +169,7 @@ public class HackerNewsTest {
 	@Test
 	public void testNNComments(){
 		try{
-			driver.findElement(By.partialLinkText("3 comments")).click();	//TODO this could be a regex
+			driver.findElement(By.partialLinkText(" comments")).click();	//TODO this could be a regex
 			String URL = driver.getCurrentUrl();
 			if (!URL.contains("item?id="))
 				fail();
@@ -184,7 +184,7 @@ public class HackerNewsTest {
 	@Test
 	public void testNNCommentsReply(){
 		try{
-			driver.findElement(By.partialLinkText("3 comments")).click();
+			driver.findElement(By.partialLinkText(" comments")).click();
 			driver.findElement(By.partialLinkText("reply")).click();
 			String URL = driver.getCurrentUrl();
 			if (!URL.contains("reply"))
@@ -201,7 +201,7 @@ public class HackerNewsTest {
 	@Test
 	public void testNNCommentsFindParent(){
 		try{
-			driver.findElement(By.partialLinkText("8 comments")).click();
+			driver.findElement(By.partialLinkText(" comments")).click();
 			String firstURL = driver.getCurrentUrl();
 			driver.findElement(By.partialLinkText("reply")).click();
 			driver.findElement(By.partialLinkText("parent")).click();
@@ -219,7 +219,7 @@ public class HackerNewsTest {
 	@Test
 	public void testNNCommentsFindWeb(){
 		try{
-			driver.findElement(By.partialLinkText("8 comments")).click();
+			driver.findElement(By.partialLinkText(" comments")).click();
 			driver.findElement(By.partialLinkText("web")).click();
 			String URL = driver.getCurrentUrl();
 			assertTrue(URL.contains("google"));
