@@ -134,4 +134,35 @@ public class HackerNewsTest {
 			fail();
 		}
 	}
+	
+	//Given that I am on the main page
+	//When I click on the "discuss" link on a story
+	//I should be sent to the comments page
+	@Test
+	public void testDiscussComments(){
+		try{
+			driver.findElement(By.partialLinkText("discuss")).click();
+			String URL = driver.getCurrentUrl();
+			if (!URL.contains("item?id="))
+				fail();
+		} catch (NoSuchElementException nseex) {
+			fail();
+		}
+		
+	}
+	
+	//Given that I am on the main page
+	//When I click on the "?? comments" link on a story
+	//I should be sent to the comments page
+	@Test
+	public void testNNComments(){
+		try{
+			driver.findElement(By.partialLinkText("3 comments")).click();	//TODO this could be a regex
+			String URL = driver.getCurrentUrl();
+			if (!URL.contains("item?id="))
+				fail();
+		} catch (NoSuchElementException nseex) {
+			fail();
+		}
+	}
 }
