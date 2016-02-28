@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import java.util.regex.Pattern;
 
 public class HackerNewsTest {
 
@@ -160,6 +161,22 @@ public class HackerNewsTest {
 			driver.findElement(By.partialLinkText("3 comments")).click();	//TODO this could be a regex
 			String URL = driver.getCurrentUrl();
 			if (!URL.contains("item?id="))
+				fail();
+		} catch (NoSuchElementException nseex) {
+			fail();
+		}
+	}
+	
+	//Given that I am on a comments page
+	//When I click on a "reply" link on a comment
+	//I should be sent to the reply page
+	@Test
+	public void testNNCommentsReply(){
+		try{
+			driver.findElement(By.partialLinkText("3 comments")).click();
+			driver.findElement(By.partialLinkText("reply")).click();
+			String URL = driver.getCurrentUrl();
+			if (!URL.contains("reply"))
 				fail();
 		} catch (NoSuchElementException nseex) {
 			fail();
