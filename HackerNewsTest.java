@@ -193,4 +193,38 @@ public class HackerNewsTest {
 			fail();
 		}
 	}
+
+	//Need a user logged in for this test.
+	//Given that I am on a comments page
+	//When I click on reply, and then click "parent" link to go back
+	//I should be sent to the original comments page
+	@Test
+	public void testNNCommentsFindParent(){
+		try{
+			driver.findElement(By.partialLinkText("8 comments")).click();
+			String firstURL = driver.getCurrentUrl();
+			driver.findElement(By.partialLinkText("reply")).click();
+			driver.findElement(By.partialLinkText("parent")).click();
+			String secondURL = driver.getCurrentUrl();
+			assertTrue(firstURL.equals(secondURL));
+		} catch (NoSuchElementException nseex) {
+			fail();
+		}
+	}
+	
+	//Need a user logged in for this test.
+	//Given that I am on a comments page
+	//When I click on 'web'
+	//I should be sent to a google search of the story
+	@Test
+	public void testNNCommentsFindWeb(){
+		try{
+			driver.findElement(By.partialLinkText("8 comments")).click();
+			driver.findElement(By.partialLinkText("web")).click();
+			String URL = driver.getCurrentUrl();
+			assertTrue(URL.contains("google"));
+		} catch (NoSuchElementException nseex) {
+			fail();
+		}
+	}
 }
