@@ -4,13 +4,18 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.*;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+
+import com.gargoylesoftware.htmlunit.BrowserVersion;
+
 import java.util.regex.Pattern;
 
 public class HackerNewsTest {
 
-	static WebDriver driver = new HtmlUnitDriver();
+	//static WebDriver driver = new HtmlUnitDriver(BrowserVersion.FIREFOX_38);
+	static WebDriver driver = new FirefoxDriver();
 	static String baseUrl = "https://news.ycombinator.com";
 	// Start at the home page for hackernews for each test
 	@BeforeClass
@@ -169,7 +174,7 @@ public class HackerNewsTest {
 	@Test
 	public void testNNComments(){
 		try{
-			driver.findElement(By.partialLinkText(" comments")).click();	//TODO this could be a regex
+			driver.findElement(By.partialLinkText("3 comments")).click();	//TODO this could be a regex
 			String URL = driver.getCurrentUrl();
 			if (!URL.contains("item?id="))
 				fail();
@@ -184,7 +189,7 @@ public class HackerNewsTest {
 	@Test
 	public void testNNCommentsReply(){
 		try{
-			driver.findElement(By.partialLinkText(" comments")).click();
+			driver.findElement(By.partialLinkText("3 comments")).click();
 			driver.findElement(By.partialLinkText("reply")).click();
 			String URL = driver.getCurrentUrl();
 			if (!URL.contains("reply"))
@@ -193,82 +198,139 @@ public class HackerNewsTest {
 			fail();
 		}
 	}
-
-	//Need a user logged in for this test.
-	//Given that I am on a comments page
-	//When I click on reply, and then click "parent" link to go back
-	//I should be sent to the original comments page
-	@Test
-	public void testNNCommentsFindParent(){
-		try{
-			driver.findElement(By.partialLinkText(" comments")).click();
-			String firstURL = driver.getCurrentUrl();
-			driver.findElement(By.partialLinkText("reply")).click();
-			driver.findElement(By.partialLinkText("parent")).click();
-			String secondURL = driver.getCurrentUrl();
-			assertTrue(firstURL.equals(secondURL));
-		} catch (NoSuchElementException nseex) {
-			fail();
-		}
-	}
 	
-	//Need a user logged in for this test.
-	//Given that I am on a comments page
-	//When I click on 'web'
-	//I should be sent to a google search of the story
-	@Test
-	public void testNNCommentsFindWeb(){
-		try{
-			driver.findElement(By.partialLinkText(" comments")).click();
-			driver.findElement(By.partialLinkText("web")).click();
-			String URL = driver.getCurrentUrl();
-			assertTrue(URL.contains("google"));
-		} catch (NoSuchElementException nseex) {
-			fail();
-		}
-	}
-
-	//Test searching functionality
-	/*
+	//Tests for search functionality
+	
+	//Given that I am on the main page
+	//When I search for the first story on the page
+	//I should not see no results
 	@Test
 	public void testSearchExistingStory()
 	{
-		fail();
+		WebElement element = driver.findElement(By.cssSelector("tr.athing:nth-child(1) > td:nth-child(3) > a:nth-child(2)"));
+		String elementStr = element.getText();
+		System.out.println(elementStr);
+	    driver.findElement(By.name("q")).clear();
+	    driver.findElement(By.name("q")).sendKeys(elementStr);
+	    driver.findElement(By.name("q")).submit();
+	   
+	    assertFalse(elementStr.contains("No results"));
 	}
+	
+	//Given that I I am on the main page
+	//When I search for random nonsense
+	//I should not see any results
 	@Test
 	public void testSearchNoResults()
 	{
-		fail();
+	    driver.findElement(By.name("q")).clear();
+	    driver.findElement(By.name("q")).sendKeys(";lakjh;lksjd;jo");
+	    driver.findElement(By.name("q")).submit();
+	    WebElement element = driver.findElement(By.cssSelector("li.ng-binding"));
+	    String elementStr = element.getText();
+	    assertTrue(elementStr.contains("No results"));
 	}
+	
+	//Given that I am on the main page
+	//When I search for something
+	//I should be redirected to algolia's site
+	@Test
 	public void testSearchRedirect()
 	{
-		fail();
+	    driver.findElement(By.name("q")).clear();
+	    driver.findElement(By.name("q")).sendKeys("linux");
+	    driver.findElement(By.name("q")).submit();
+	    System.out.println(driver.getCurrentUrl());
+	    assertTrue(driver.getCurrentUrl().contains("algolia"));
 	}
+	
+	//Given that I am on the main page
+	//When I make a search
+	//I should see a time elapsed for the search
+	@Test
 	public void testSearchTime()
 	{
-		fail();
+	    driver.findElement(By.name("q")).clear();
+	    driver.findElement(By.name("q")).sendKeys("linux");
+	    driver.findElement(By.name("q")).submit();
+	    WebElement element = driver.findElement(By.cssSelector("li.ng-binding"));
+	    String elementStr = element.getText();
+	    assertTrue(elementStr.contains("seconds"));
 	}
+	
+	//Given that I am on the main page
+	//When I make a search
+	//I should see the number of results for that search
+	@Test
 	public void testSearchNumResults()
 	{
-		fail();
+	    driver.findElement(By.name("q")).clear();
+	    WebElement search = driver.findElement(By.name("q"));
+	    driver.findElement(By.name("q")).sendKeys("linux");
+	    driver.findElement(By.name("q")).submit();;
+	    assertTrue(driver.findElement(By.cssSelector("li.ng-binding > ng-pluralize:nth-child(2)")).getText().contains(" results"));
 	}
 	
 	//Test Profile Page
+	
+	//Given that I am on the main page
+	//When I click on my profile name
+	//I should be redirected to my profile
+	@Test
 	public void testProfileRedirect()
 	{
-		fail();
+		driver.findElement(By.linkText("cs1632Test")).click();
+		String newPageTitle = driver.getTitle();
+		assertTrue(newPageTitle.contains("Profile"));
 	}
+	
+	//Given that I am on my profile page
+	//When I click comments
+	//I should be redirected to a page with my comments
+	@Test
 	public void testProfileCommentsRedirect()
 	{
-		fail();
+	    driver.findElement(By.cssSelector("#hnmain > tbody:nth-child(1) > tr:nth-child(1) "
+	    								+ "> td:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) "
+	    								+ "> tr:nth-child(1) > td:nth-child(3) > span:nth-child(1) > "
+	    								+ "a:nth-child(1)")
+	    								).click();
+		driver.findElement(By.cssSelector(".profileform > table:nth-child(3) > tbody:nth-child(1) "
+										+ "> tr:nth-child(14) > td:nth-child(2) > a:nth-child(1) "
+										+ "> u:nth-child(1)")
+										).click();
+		String newPageUrl= driver.getCurrentUrl();
+		System.out.println(newPageUrl);
+		assertTrue(newPageUrl.contains("threads?id=cs1632Test"));
 	}
+	
+	//Given that I am on my profile page
+	//When I click submissions
+	//I should be redirected to a page with my submissions
+	@Test
 	public void testProfileSubmissionRedirect()
 	{
-		fail();
+		driver.findElement(By.linkText("cs1632Test")).click();
+		driver.findElement(By.partialLinkText("submission")).click();
+		String newPageTitle = driver.getTitle();
+		assertTrue(newPageTitle.contains("submission"));
 	}
+	
+	//Given that I am on my profile page
+	//I should see a line with my username next to it	
+	@Test
 	public void testProfileUserName()
 	{
-		fail();
+		driver.findElement(By.cssSelector("#hnmain > tbody:nth-child(1) > tr:nth-child(1) "
+				+ "> td:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) "
+				+ "> tr:nth-child(1) > td:nth-child(3) > span:nth-child(1) > "
+				+ "a:nth-child(1)")
+				).click();
+		WebElement element = driver.findElement(By.cssSelector(".profileform > table:nth-child(3) > tbody:nth-child(1) "
+										+ "> tr:nth-child(1) > td:nth-child(2) > a:nth-child(1) "
+										+ "> font:nth-child(1)"));
+		String elementStr = element.getText();
+		assertTrue(elementStr.equals("cs1632Test"));
 	}
-	*/
+	
 }
