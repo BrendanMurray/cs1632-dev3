@@ -232,7 +232,7 @@ public class HackerNewsTest {
 		}
 	}
 	
-	//Tests for search functionality
+//Tests for search functionality
 	
 	//Given that I am on the main page
 	//When I search for the first story on the page
@@ -256,6 +256,7 @@ public class HackerNewsTest {
 	@Test
 	public void testSearchNoResults()
 	{
+		//finds search text box
 	    driver.findElement(By.name("q")).clear();
 	    driver.findElement(By.name("q")).sendKeys(";lakjh;lksjd;jo");
 	    driver.findElement(By.name("q")).submit();
@@ -270,6 +271,7 @@ public class HackerNewsTest {
 	@Test
 	public void testSearchRedirect()
 	{
+		//finds search text box
 	    driver.findElement(By.name("q")).clear();
 	    driver.findElement(By.name("q")).sendKeys("linux");
 	    driver.findElement(By.name("q")).submit();
@@ -283,6 +285,7 @@ public class HackerNewsTest {
 	@Test
 	public void testSearchTime()
 	{
+		//finds search text box
 	    driver.findElement(By.name("q")).clear();
 	    driver.findElement(By.name("q")).sendKeys("linux");
 	    driver.findElement(By.name("q")).submit();
@@ -312,6 +315,7 @@ public class HackerNewsTest {
 	@Test
 	public void testProfileRedirect()
 	{
+		//clicks on username
 		driver.findElement(By.linkText("cs1632Test")).click();
 		String newPageTitle = driver.getTitle();
 		assertTrue(newPageTitle.contains("Profile"));
@@ -323,11 +327,13 @@ public class HackerNewsTest {
 	@Test
 	public void testProfileCommentsRedirect()
 	{
+		//Clicks on username
 	    driver.findElement(By.cssSelector("#hnmain > tbody:nth-child(1) > tr:nth-child(1) "
 	    								+ "> td:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) "
 	    								+ "> tr:nth-child(1) > td:nth-child(3) > span:nth-child(1) > "
 	    								+ "a:nth-child(1)")
 	    								).click();
+	    //Clicks on profile comments link
 		driver.findElement(By.cssSelector(".profileform > table:nth-child(3) > tbody:nth-child(1) "
 										+ "> tr:nth-child(14) > td:nth-child(2) > a:nth-child(1) "
 										+ "> u:nth-child(1)")
@@ -343,7 +349,9 @@ public class HackerNewsTest {
 	@Test
 	public void testProfileSubmissionRedirect()
 	{
+		//clicks username
 		driver.findElement(By.linkText("cs1632Test")).click();
+		//clicks the submission link
 		driver.findElement(By.partialLinkText("submission")).click();
 		String newPageTitle = driver.getTitle();
 		assertTrue(newPageTitle.contains("submission"));
@@ -354,11 +362,13 @@ public class HackerNewsTest {
 	@Test
 	public void testProfileUserName()
 	{
+		//Clicks username
 		driver.findElement(By.cssSelector("#hnmain > tbody:nth-child(1) > tr:nth-child(1) "
 				+ "> td:nth-child(1) > table:nth-child(1) > tbody:nth-child(1) "
 				+ "> tr:nth-child(1) > td:nth-child(3) > span:nth-child(1) > "
 				+ "a:nth-child(1)")
 				).click();
+		//finds username section on page
 		WebElement element = driver.findElement(By.cssSelector(".profileform > table:nth-child(3) > tbody:nth-child(1) "
 										+ "> tr:nth-child(1) > td:nth-child(2) > a:nth-child(1) "
 										+ "> font:nth-child(1)"));
