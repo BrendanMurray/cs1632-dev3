@@ -174,9 +174,9 @@ public class HackerNewsTest {
 	@Test
 	public void testNNComments(){
 		try{
-			driver.findElement(By.partialLinkText("3 comments")).click();	//TODO this could be a regex
+			driver.findElement(By.partialLinkText(" comments")).click();	//find a '[0-9] comments' link 
 			String URL = driver.getCurrentUrl();
-			if (!URL.contains("item?id="))
+			if (!URL.contains("item?id="))	//if the URL is missing the 'item?id=' string it is not a comments page 
 				fail();
 		} catch (NoSuchElementException nseex) {
 			fail();
@@ -189,11 +189,44 @@ public class HackerNewsTest {
 	@Test
 	public void testNNCommentsReply(){
 		try{
-			driver.findElement(By.partialLinkText("3 comments")).click();
+			driver.findElement(By.partialLinkText(" comments")).click();	//find a '[0-9] comments' link 
 			driver.findElement(By.partialLinkText("reply")).click();
 			String URL = driver.getCurrentUrl();
-			if (!URL.contains("reply"))
+			if (!URL.contains("reply"))	//if the URL is missing the 'reply' string it is not a reply page
 				fail();
+		} catch (NoSuchElementException nseex) {
+			fail();
+		}
+	}
+
+	//Need a user logged in for this test.
+	//Given that I am on a comments page
+	//When I click on reply, and then click "parent" link to go back
+	//I should be sent to the original comments page
+	@Test
+	public void testNNCommentsFindParent(){
+		try{
+			driver.findElement(By.partialLinkText(" comments")).click();	//find a comments link
+			String firstURL = driver.getCurrentUrl();
+			driver.findElement(By.partialLinkText("reply")).click();		//get to reply page
+			driver.findElement(By.partialLinkText("parent")).click();		//find parent link to return to reply page
+			String secondURL = driver.getCurrentUrl();
+			assertTrue(firstURL.equals(secondURL));
+		} catch (NoSuchElementException nseex) {
+			fail();
+		}
+	}
+
+	//Given that I am on a comments page
+	//When I click on 'web'
+	//I should be sent to a google search
+	@Test
+	public void testNNCommentsFindWeb(){
+		try{
+			driver.findElement(By.partialLinkText(" comments")).click();	//find a comments link
+			driver.findElement(By.partialLinkText("web")).click();			//click the web link
+			String URL = driver.getCurrentUrl();
+			assertTrue(URL.contains("google"));								//check if the URL is now google
 		} catch (NoSuchElementException nseex) {
 			fail();
 		}
